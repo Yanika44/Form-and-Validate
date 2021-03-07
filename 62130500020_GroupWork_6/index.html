@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Vue Js - HelloWorld App</title>
+
+    <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+    <!-- Using via Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <!-- https://tailwindcss.com/docs/installation -->
+    <!-- Using Tailwind via CDN -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+    <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+
+    <link href='https://unpkg.com/tailwindcss@%5E2/dist/tailwind.min.css%27%3E'>
+
+    <script src='https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js%27%3E'></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="pl-96 ml-16 mt-10 ">
+            <div class="ml-28"> <img v-bind:src="image1" class="h-44 w-96"> </div>
+            <div class="-mt-16 ml-52 pl-2"> <img v-bind:src="image2"
+                    class="rounded-full h-44 w-44 flex items-center justify-center..."></div>
+            <div class="mt-5 -ml-96 text-center">
+                <h4 class="-ml-24 pl-6 text-base font-semibold">{{username}}</h4>
+                <h4 class="-ml-20 text-xl font-bold">{{firstname}} {{lastname}}</h4> <span
+                    class="-ml-20 mb-2">{{country}}</span>
+            </div>
+            <div class="ml-52 flex space-x-14 mt-4 font-bold mb-8">
+                <h4 class="text-base">Age: {{age}}</h4>
+                <h4 class="text-base">Gender: {{gender}}</h4>
+            </div>
+            <div class="pl-96 pt-1 ml-28 bg-gray-300 w-96 h-16">
+                <div class="-ml-80 flex space-x-14 mt-1 font-bold">
+                    <h6 class="-ml-5">{{text1}}</h6>
+                    <h6 class="">{{text2}}</h6>
+                    <h6 class="">{{text3}}</h6>
+                </div>
+                <div class="-ml-80">
+                    <span class="-ml-2">{{total1}}</span>
+                    <span class="pl-2 ml-20">{{total2}}</span>
+                    <span class="pl-2 ml-24">{{total3}}</span>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="ml-80 pl-60 mb-10 mx-96 pr-36 mr-96 mt-10 flex justify-content-center">
+            <div class="w-96">
+                <form @submit.prevent="checkForm">
+                    <div class="p-8  border rounded-lg">
+                        <h1 class="text-2xl pt-4 pb-4">Verify Account</h1>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="flex flex-col">
+                                <label for="firstname" class="text-sm leading-7 text-gray-600">First Name</label>
+                                <input type="text" id="firstname" v-model="firstname" name="firstname"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" placeholder="First name">
+                                <span v-if="errors.firstname"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1 ">
+                                    {{this.errors.firstname[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="lastname" class="text-sm leading-7 text-gray-600">Last Name</label>
+                                <input type="text" id="lastname" v-model="lastname" name="lastname"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" placeholder="Last name">
+                                    <span v-if="errors.lastname"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1">
+                                    {{this.errors.lastname[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="age" class="text-sm leading-7 text-gray-600">Age</label>
+                                <input type="text" id="age" v-model="age" name="age"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" placeholder="Age">
+                                    <span v-if="errors.age"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1">
+                                    {{this.errors.age[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-sm leading-7 text-gray-600">Gender</label>
+                                <div class="flex flex-row pt-2 space-x-2">
+                                    <input type="radio" id="Male" v-model="gender" name="gender" value="M"
+                                        class="bg-gray-100 rounded px-4 py-2 mb-1">
+                                    <label for="Male">Male</label>
+                                    <input type="radio" id="Female" v-model="gender" name="gender" value="F"
+                                        class="bg-gray-100 rounded px-4 py-2 mb-1">
+                                    <label for="Female">Female</label>
+                                </div>
+                                <span v-if="errors.gender"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1">
+                                    {{this.errors.gender[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="email" class="text-sm leading-7 text-gray-600">Email</label>
+                                <input type="text" id="email" v-model="email" name="email"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" placeholder="example@gmail.com">
+                                    <span v-if="errors.email"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1">
+                                    {{this.errors.email[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="phone" class="text-sm leading-7 text-gray-600">Phone Number</label>
+                                <input type="text" id="phone" v-model="phone" name="phone"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" placeholder="08x-xxx-xxxx">
+                                    <span v-if="errors.phone"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-1">
+                                    {{this.errors.phone[0]}}
+                                </span>
+                            </div>
+                            <div class="flex flex-col col-span-2 mb-10" id="drop">
+                                <label for="country" class="text-sm leading-7 text-gray-600">Country</label>
+                                <select id="country" v-model="country" name="country"
+                                    class="bg-gray-100 rounded px-4 py-2 mb-1" >
+                                    <option v-for="country in country_lists" :value="country.country_id" >
+                                        {{country.country_name}}
+                                    </option>  
+                                </select>     
+                                    <span v-if="errors.country"
+                                    class="flex items-center font-medium tracking-wide text-red-500 text-xs ml-1 mb-4">
+                                    {{this.errors.country[0]}}
+                                </span>                            
+
+                            </div>
+                            <div>
+                                <input type="submit" value="Submit"
+                                    class="ml-32 mr-20 cursor-pointer px-2 py-2 text-white bg-yellow-600 rounded-lg hover:bg-yellow-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- my main.js -->
+    <script src="./profiles.js"></script>
+</body>
+
+</html>
